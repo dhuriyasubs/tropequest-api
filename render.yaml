@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: tropequest-api
+    env: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: GIN_MODE
+        value: release
+    healthCheckPath: /api/books
