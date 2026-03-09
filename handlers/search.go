@@ -10,26 +10,30 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
-type Handler struct {
-	sheets *services.SheetsService
+// BookService is satisfied by both SheetsService and DBService.
+type BookService interface {
+	GetBooks() []models.Book
 }
 
-func NewHandler(sheets *services.SheetsService) *Handler {
-	return &Handler{sheets: sheets}
+type Handler struct {
+	svc BookService
+}
+
+func NewHandler(svc BookService) *Handler {
+	return &Handler{svc: svc}
 }
 
 // GET /api/books
 func (h *Handler) GetBooks(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
-		"books": h.sheets.GetBooks(),
-		"total": len(h.sheets.GetBooks()),
+		"books": h.svc.GetBooks(),
+		"total": len(h.svc.GetBooks()),
 	})
 }
 
 // GET /api/tropes
 func (h *Handler) GetTropes(c *gin.Context) {
-	books := h.sheets.GetBooks()
+	books := h.svc.GetBooks()
 	seen := map[string]bool{}
 	var tropes []string
 	for _, b := range books {
@@ -63,7 +67,7 @@ func (h *Handler) Search(c *gin.Context) {
 	}
 
 	limit := 20
-	books := h.sheets.GetBooks()
+	books := h.svc.GetBooks()
 	var results []models.SearchResult
 
 	for _, book := range books {

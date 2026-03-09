@@ -7,7 +7,10 @@ type Book struct {
 	Tropes      []string `json:"tropes"`
 	Description string   `json:"description,omitempty"`
 	CoverURL    string   `json:"cover_url,omitempty"`
-	BuyURL      string   `json:"buy_url,omitempty"`
+	BuyURL          string `json:"buy_url,omitempty"`
+	BuyURLAmazonUS  string `json:"buy_url_amazon_us,omitempty"`
+	BuyURLAmazonIN  string `json:"buy_url_amazon_in,omitempty"`
+	BuyURLFlipkart  string `json:"buy_url_flipkart,omitempty"`
 	Rating       float64  `json:"rating,omitempty"`
 	RatingCount  int      `json:"rating_count,omitempty"`
 	RatingSource string   `json:"rating_source,omitempty"`
